@@ -37,7 +37,7 @@ namespace SportsStore.WebUI.Models
             lineCollection.RemoveAll(l => l.Product.ProductID == product.ProductID);
         }
 
-        public decimal ComputetotalValue()
+        public decimal ComputeTotalValue()
         {
             return lineCollection.Sum(e => e.Product.Price * e.Quantity);
         }
@@ -52,6 +52,4 @@ namespace SportsStore.WebUI.Models
             get { return lineCollection; }
         }
     }
-
-    
 }
