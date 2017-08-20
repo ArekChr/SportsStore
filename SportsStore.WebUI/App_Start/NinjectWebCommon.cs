@@ -46,7 +46,7 @@ namespace SportsStore.WebUI.App_Start
             RegisterServices(kernel);
             return kernel;
         }
-
+        
         /// <summary>
         /// Load your modules or register your services here!
         /// </summary>
