@@ -32,6 +32,7 @@ namespace SportsStore.UnitTest
 
             // działanie   
             ProductListViewModel result = (ProductListViewModel)controller.List(null, 2).Model;
+
             // asercje  
             Product[] prodArray = result.Products.ToArray();
             Assert.IsTrue(prodArray.Length == 2);
@@ -59,7 +60,7 @@ namespace SportsStore.UnitTest
             // działanie
             MvcHtmlString result = myHelper.PageLinks(pagingInfo, pageUrlDelegate);
 
-            Assert.AreEqual(@"<a class=""btn btn-default"" href=""Strona1"">1</a><a class="" btn btn-default btn-primary selected"" href=""Strona2"">2</a><a class=""btn btn-default"" href=""Strona3"">3</a>>. ", result.ToString());
+            Assert.AreEqual(@"<a class=""btn btn-default"" href=""Strona1"">1</a><a class="" btn btn-default btn-primary selected"" href=""Strona2"">2</a><a class=""btn btn-default"" href=""Strona3"">3</a>> ", result.ToString());
         }
 
         [TestMethod]
