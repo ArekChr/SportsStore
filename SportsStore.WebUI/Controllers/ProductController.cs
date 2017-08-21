@@ -16,7 +16,6 @@ namespace SportsStore.WebUI.Controllers
 
         public ProductController(IProductRepository productRepository)
         {
-            
             this.repository = productRepository;
         }
         public ViewResult List(string category, int page = 1)
