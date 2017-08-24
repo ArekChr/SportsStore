@@ -33,12 +33,17 @@ namespace SportsStore.WebUI.Controllers
         private Cart GetCart()
         {
             Cart cart = (Cart)Session["Cart"];
-            if(cart == null)
+            if (cart == null)
             {
                 cart = new Cart();
                 Session["Cart"] = cart;
             }
             return cart;
+        }
+
+        public ViewResult Checkout()
+        {
+            return View(new ShippingDetails());
         }
 
         public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl)
