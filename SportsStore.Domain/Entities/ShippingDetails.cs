@@ -23,6 +23,6 @@ namespace SportsStore.Domain.Entities
         [Required(ErrorMessage = "Proszę podać nazwę kraju.")]
         public string Country { get; set; }
 
-        public bool Giftwrap { get; set; }
+        public bool GiftWrap { get; set; }
     }
 }
