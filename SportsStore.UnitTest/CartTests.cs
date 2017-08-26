@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Web.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SportsStore.Domain.Entities;
 using SportsStore.WebUI.Models;
@@ -6,12 +7,94 @@ using Moq;
 using SportsStore.Domain.Abstract;
 using SportsStore.WebUI.Controllers;
 using System.Web.Mvc;
+using Ninject.Planning.Targets;
 
 namespace SportsStore.UnitTests
 {
     [TestClass]
     public class CartTests
     {
+        [TestMethod]
+        public void Cannot_Checkout_Empty_Cart()
+        {
+            // przygotowanie - tworzenie imitacji procesora zamówień
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+
+            // przygotowanie - tworzenie pustego koszyka
+            Cart cart = new Cart();
+
+            //przygotowanie - tworzenie danych do wysyłki
+            ShippingDetails shippingDetails = new ShippingDetails();
+
+            // przygotowanie - tworzenie egzemplarza kontrolera
+            CartController target = new CartController(null, mock.Object);
+
+            //działanie
+            ViewResult result = target.Checkout(cart, shippingDetails);
+
+            //asercje - sprawdzanie czy zamowienie zostało przekazane do procesora
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never());
+
+            // asercje - sprawdzenie czy metoda zwraca domyślny widok
+            Assert.AreEqual("", result.ViewName);
+
+            // asercje - sprawdzenie czy przekazujemy prawidlowy model do widoku
+            Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Cannot_Checkout_Invalid_ShippingDetails()
+        {
+            // przygotowanie — tworzenie imitacji procesora zamówień  
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+
+            // przygotowanie — tworzenie koszyka z produktem   
+            Cart cart = new Cart();
+            cart.AddItem(new Product(), 1);
+
+            // przygotowanie — tworzenie egzemplarza kontrolera  
+            CartController target = new CartController(null, mock.Object);
+
+            // przygotowanie — dodanie błędu do modelu   
+            target.ModelState.AddModelError("error", "error");
+
+            // działanie — próba zakończenia zamówienia    
+            ViewResult result = target.Checkout(cart, new ShippingDetails());
+
+            // asercje — sprawdzenie, czy zamówienie nie zostało przekazane do procesora  
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Never());
+
+            // asercje — sprawdzenie, czy metoda zwraca domyślny widok  
+            Assert.AreEqual("", result.ViewName);
+
+            // asercje — sprawdzenie, czy przekazujemy nieprawidłowy model do widoku  
+            Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
+        }
+
+        [TestMethod]
+        public void Can_Checkout_And_Submit_Order()
+        {
+            //przygotowanie - tworzenie imitacji procesora zamówień
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+
+            //przygotowanie - tworzenie koszyka z produktem
+            Cart cart = new Cart();
+            cart.AddItem(new Product(), 1);
+
+            // przygotowanie - tworzenie egzemplarza kontrole
+            CartController target = new CartController(null, mock.Object);
+
+            //działanie - próba zakończenia zamówienia
+            ViewResult result = target.Checkout(cart, new ShippingDetails());
+
+            //asercje - sprawdzenie czy zamowienie nie zostało przekazane do procesora
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()), Times.Once);
+
+            //asercje - sprawdzenie, czy przekazujemy prawidłowy model do widoku
+            Assert.AreEqual(true, result.ViewData.ModelState.IsValid);
+
+        }
+
         [TestMethod]
         public void Can_Add_New_Lines()
         {
@@ -133,7 +216,7 @@ namespace SportsStore.UnitTests
             Cart cart = new Cart();
 
             //przygotowanie - utworzenie kontrolera
-            CartController target = new CartController(mock.Object);
+            CartController target = new CartController(mock.Object, null);
 
             // działanie - dodanie produktu do koszyka
             target.AddToCart(cart, 1, null);
@@ -156,7 +239,7 @@ namespace SportsStore.UnitTests
             Cart cart = new Cart();
 
             // przygotowanie — utworzenie kontrolera    
-            CartController target = new CartController(mock.Object);
+            CartController target = new CartController(mock.Object, null);
 
             // działanie — dodanie produktu do koszyka    
             RedirectToRouteResult result = target.AddToCart(cart, 2, "myUrl");
@@ -173,7 +256,7 @@ namespace SportsStore.UnitTests
             Cart cart = new Cart();
 
             // przygotowanie — utworzenie kontrolera    
-            CartController target = new CartController(null);
+            CartController target = new CartController(null, null);
 
             // działanie — wywołanie metody akcji Index   
             CartIndexViewModel result             

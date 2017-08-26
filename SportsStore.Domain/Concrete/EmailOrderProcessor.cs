@@ -19,7 +19,7 @@ namespace SportsStore.Domain.Concrete
         public bool WriteAsFile = false;
         public string FileLocation = @"\sports_store_emails";
     }
-    public class EmailOrderProcessor
+    public class EmailOrderProcessor : IOrderProcessor
     {
         private EmailSettings emailSettings;
 
