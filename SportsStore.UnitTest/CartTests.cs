@@ -122,6 +122,7 @@ namespace SportsStore.UnitTests
             // przygotowanie — tworzenie produktów testowych   
             Product p1 = new Product { ProductID = 1, Name = "P1" };
             Product p2 = new Product { ProductID = 2, Name = "P2" };
+            
 
             // przygotowanie — utworzenie nowego koszyka 
             Cart target = new Cart();
