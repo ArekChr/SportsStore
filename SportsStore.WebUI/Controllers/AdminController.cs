@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using SportsStore.Domain.Abstract;
-using System.Linq;
 using SportsStore.Domain.Entities;
+using System.Linq;
 
 namespace SportsStore.WebUI.Controllers
 {
@@ -14,7 +14,7 @@ namespace SportsStore.WebUI.Controllers
             repository = repo;
         }
 
-        public ActionResult Index()
+        public ViewResult Index()
         {
             return View(repository.Products);
         }
@@ -25,7 +25,6 @@ namespace SportsStore.WebUI.Controllers
                 .FirstOrDefault(p => p.ProductID == productId);
             return View(product);
         }
-
         [HttpPost]
         public ActionResult Edit(Product product)
         {
@@ -37,14 +36,9 @@ namespace SportsStore.WebUI.Controllers
             }
             else
             {
-                //błąd w wartościach danychh
+                // błąd w wartościach danych          
                 return View(product);
             }
-        }
-
-        public ViewResult Create()
-        {
-            return View("Edit", new Product());
-        }
+        } 
     }
 }

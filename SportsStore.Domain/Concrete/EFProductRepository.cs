@@ -12,7 +12,6 @@ namespace SportsStore.Domain.Concrete
         {
             get { return context.Products; }
         }
-
         public void SaveProduct(Product product)
         {
             if (product.ProductID == 0)
@@ -29,8 +28,7 @@ namespace SportsStore.Domain.Concrete
                     dbEntry.Price = product.Price;
                     dbEntry.Category = product.Category;
                 }
-            }
-            context.SaveChanges();
+            } context.SaveChanges();
         }
     }
 }
