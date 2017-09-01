@@ -80,13 +80,13 @@
     <Compile Include="Migrations\201708051827299_InitialCreate.Designer.cs">
       <DependentUpon>201708051827299_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708302034142_Products.cs" />
-    <Compile Include="Migrations\201708302034142_Products.Designer.cs">
-      <DependentUpon>201708302034142_Products.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201708302036067_Product.cs" />
     <Compile Include="Migrations\201708302036067_Product.Designer.cs">
       <DependentUpon>201708302036067_Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708312057223_products.cs" />
+    <Compile Include="Migrations\201708312057223_products.Designer.cs">
+      <DependentUpon>201708312057223_products.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,11 +99,11 @@
     <EmbeddedResource Include="Migrations\201708051827299_InitialCreate.resx">
       <DependentUpon>201708051827299_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708302034142_Products.resx">
-      <DependentUpon>201708302034142_Products.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708302036067_Product.resx">
       <DependentUpon>201708302036067_Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708312057223_products.resx">
+      <DependentUpon>201708312057223_products.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
